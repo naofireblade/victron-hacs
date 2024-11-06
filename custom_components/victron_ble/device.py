@@ -392,13 +392,11 @@ class VictronBluetoothDeviceData(BluetoothData):
                 device_class=SensorDeviceClass.TEMPERATURE,
             )
             # cell voltages (dont know how to handle lists here)
-            
-            # enum missing in victron-ble
-#             self.update_sensor(
-#                 key=VictronSensor.BALANCER_STATUS,
-#                 native_unit_of_measurement=None,
-#                 native_value=enum_to_native_value(parsed.get_balancer_status()),
-#                 device_class=SensorDeviceClass.ENUM,
-#             )
+            self.update_sensor(
+                key=VictronSensor.BALANCER_STATUS,
+                native_unit_of_measurement=None,
+                native_value=enum_to_native_value(parsed.get_balancer_status()),
+                device_class=SensorDeviceClass.ENUM,
+            )
 
         return

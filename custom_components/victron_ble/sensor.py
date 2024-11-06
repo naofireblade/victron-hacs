@@ -26,6 +26,7 @@ from sensor_state_data.data import SensorUpdate
 from sensor_state_data.units import Units
 from victron_ble.devices.base import ACInState, AlarmNotification, AlarmReason, ChargerError, OffReason, OperationMode
 from victron_ble.devices.battery_monitor import AuxMode
+from victron_ble.devices.smart_lithium import BalancerStatus
 
 from .const import DOMAIN
 from .device import VictronSensor
@@ -230,11 +231,11 @@ SENSOR_DESCRIPTIONS: Dict[Tuple[SensorDeviceClass, Optional[Units]], Any] = {
     (VictronSensor.ERROR_FLAGS, None): SensorEntityDescription(
         key=VictronSensor.ERROR_FLAGS,
     ),
-#     (VictronSensor.BALANCER_STATUS, None): SensorEntityDescription(
-#         key=VictronSensor.BALANCER_STATUS,
-#         device_class=SensorDeviceClass.ENUM,
-#         options=[x.lower() for x in BalancerStatus._member_names_],
-#     ),
+    (VictronSensor.BALANCER_STATUS, None): SensorEntityDescription(
+        key=VictronSensor.BALANCER_STATUS,
+        device_class=SensorDeviceClass.ENUM,
+        options=[x.lower() for x in BalancerStatus._member_names_],
+    ),
 }
 
 
