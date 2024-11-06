@@ -370,13 +370,13 @@ class VictronBluetoothDeviceData(BluetoothData):
         elif isinstance(parsed, SmartLithiumData):
             self.update_sensor(
                 key=VictronSensor.BMS_FLAGS,
-                name="BMS flags",
+                name="BMS Flags",
                 native_unit_of_measurement=None,
                 native_value=parsed.get_bms_flags(),
             )
             self.update_sensor(
                 key=VictronSensor.ERROR_FLAGS,
-                name="Error flags",
+                name="Error Flags",
                 native_unit_of_measurement=None,
                 native_value=parsed.get_error_flags(),
             )
