@@ -53,6 +53,13 @@ Supported Devices & Entities:
   - Output Current (A)
   - Off Reason
   - Charger Error
+- Smart Lithium Battery
+  - Voltage (V)
+  - Temperature (°C)
+  - Cell Voltages (V)
+  - Balancing Status
+  - BMS Flags
+  - Error Flags
 
 # Installation
 
