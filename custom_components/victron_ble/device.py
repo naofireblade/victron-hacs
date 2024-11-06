@@ -51,6 +51,7 @@ class VictronSensor(StrEnum):
     BMS_FLAGS = "bms_flags"
     ERROR_FLAGS = "error_flags"
     BALANCER_STATUS = "balancer_status"
+    CELL_VOLTAGE = "cell_voltage"
 
 
 class VictronBluetoothDeviceData(BluetoothData):
@@ -391,7 +392,13 @@ class VictronBluetoothDeviceData(BluetoothData):
                 native_value=parsed.get_battery_temperature(),
                 device_class=SensorDeviceClass.TEMPERATURE,
             )
-            # cell voltages (dont know how to handle lists here)
+            for i, cell_voltage in enumerate(parsed.get_cell_voltages()):
+                self.update_sensor(
+                    key=VictronSensor.CELL_VOLTAGE + "_" + str(i+1),
+                    native_unit_of_measurement=Units.ELECTRIC_POTENTIAL_VOLT,
+                    native_value=cell_voltage,
+                    device_class=SensorDeviceClass.VOLTAGE,
+                )
             self.update_sensor(
                 key=VictronSensor.BALANCER_STATUS,
                 native_unit_of_measurement=None,

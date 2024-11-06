@@ -236,6 +236,12 @@ SENSOR_DESCRIPTIONS: Dict[Tuple[SensorDeviceClass, Optional[Units]], Any] = {
         device_class=SensorDeviceClass.ENUM,
         options=[x.lower() for x in BalancerStatus._member_names_],
     ),
+    (VictronSensor.CELL_VOLTAGE, Units.ELECTRIC_POTENTIAL_VOLT): SensorEntityDescription(
+        key=VictronSensor.CELL_VOLTAGE,
+        device_class=SensorDeviceClass.VOLTAGE,
+        native_unit_of_measurement=Units.ELECTRIC_POTENTIAL_VOLT,
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
 }
 
 
@@ -252,7 +258,7 @@ def sensor_update_to_bluetooth_data_update(
             PassiveBluetoothEntityKey(
                 device_key.key, device_key.device_id
             ): SENSOR_DESCRIPTIONS[
-                (description.device_key.key, description.native_unit_of_measurement)
+                (VictronSensor.CELL_VOLTAGE if VictronSensor.CELL_VOLTAGE in description.device_key.key else description.device_key.key, description.native_unit_of_measurement)
             ]
             for device_key, description in sensor_update.entity_descriptions.items()
             if description.device_key
