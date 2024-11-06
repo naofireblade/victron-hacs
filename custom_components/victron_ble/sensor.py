@@ -224,6 +224,17 @@ SENSOR_DESCRIPTIONS: Dict[Tuple[SensorDeviceClass, Optional[Units]], Any] = {
         native_unit_of_measurement=Units.POWER_WATT,
         state_class=SensorStateClass.MEASUREMENT,
     ),
+    (VictronSensor.BMS_FLAGS, None): SensorEntityDescription(
+        key=VictronSensor.BMS_FLAGS,
+    ),
+    (VictronSensor.ERROR_FLAGS, None): SensorEntityDescription(
+        key=VictronSensor.ERROR_FLAGS,
+    ),
+#     (VictronSensor.BALANCER_STATUS, None): SensorEntityDescription(
+#         key=VictronSensor.BALANCER_STATUS,
+#         device_class=SensorDeviceClass.ENUM,
+#         options=[x.lower() for x in BalancerStatus._member_names_],
+#     ),
 }
 
 

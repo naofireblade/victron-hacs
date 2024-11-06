@@ -15,6 +15,7 @@ from victron_ble.devices.inverter import InverterData
 from victron_ble.devices.orion_xs import OrionXSData
 from victron_ble.devices.solar_charger import SolarChargerData
 from victron_ble.devices.vebus import VEBusData
+from victron_ble.devices.smart_lithium import SmartLithiumData
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,6 +48,9 @@ class VictronSensor(StrEnum):
     ALARM_REASON = "alarm_reason"
     ALARM_NOTIFICATION = "alarm_notification"
     CONSUMED = "consumed"
+    BMS_FLAGS = "bms_flags"
+    ERROR_FLAGS = "error_flags"
+    BALANCER_STATUS = "balancer_status"
 
 
 class VictronBluetoothDeviceData(BluetoothData):
@@ -361,5 +365,40 @@ class VictronBluetoothDeviceData(BluetoothData):
                 native_value=enum_to_native_value(parsed.get_alarm()),
                 device_class=SensorDeviceClass.ENUM,
             )
+            
+        elif isinstance(parsed, SmartLithiumData):
+            self.update_sensor(
+                key=VictronSensor.BMS_FLAGS,
+                name="BMS flags",
+                native_unit_of_measurement=None,
+                native_value=parsed.get_bms_flags(),
+            )
+            self.update_sensor(
+                key=VictronSensor.ERROR_FLAGS,
+                name="Error flags",
+                native_unit_of_measurement=None,
+                native_value=parsed.get_error_flags(),
+            )
+            self.update_sensor(
+                key=VictronSensor.BATTERY_VOLTAGE,
+                native_unit_of_measurement=Units.ELECTRIC_POTENTIAL_VOLT,
+                native_value=parsed.get_battery_voltage(),
+                device_class=SensorDeviceClass.VOLTAGE,
+            )
+            self.update_sensor(
+                key=VictronSensor.BATTERY_TEMPERATURE,
+                native_unit_of_measurement=Units.TEMP_CELSIUS,
+                native_value=parsed.get_battery_temperature(),
+                device_class=SensorDeviceClass.TEMPERATURE,
+            )
+            # cell voltages (dont know how to handle lists here)
+            
+            # enum missing in victron-ble
+#             self.update_sensor(
+#                 key=VictronSensor.BALANCER_STATUS,
+#                 native_unit_of_measurement=None,
+#                 native_value=enum_to_native_value(parsed.get_balancer_status()),
+#                 device_class=SensorDeviceClass.ENUM,
+#             )
 
         return
